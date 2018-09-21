@@ -1,5 +1,5 @@
 {
-  "name": "oleh-ozimok/php-centrifugo",
+  "name": "dotdev/php-centrifugo",
   "type": "library",
   "description": "PHP client for Centrifugo real-time messaging server",
   "keywords": ["centrifugo", "real-time"],
