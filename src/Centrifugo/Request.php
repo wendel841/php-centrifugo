@@ -70,7 +70,7 @@ class Request
      */
     public function getEncodedParams()
     {
-        return json_encode($this->toArray());
+        return json_encode($this->toArray()[0]);
     }
 
     /**
@@ -80,7 +80,9 @@ class Request
     {
         return [
             'Content-Type: application/json',
-            'X-API-Sign: ' . $this->generateHashSign(),
+            'Content-Length: ' . strlen($this->getEncodedParams()),
+            sprintf('Authorization: apikey %s', $this->secret),
+//            'X-API-Sign: ' . $this->generateHashSign(),
         ];
     }
 
@@ -92,14 +94,14 @@ class Request
         return ['method' => $this->method, 'params' => $this->params];
     }
 
-    /**
-     * @return string
-     */
-    protected function generateHashSign()
-    {
-        $ctx = hash_init('sha256', HASH_HMAC, $this->secret);
-        hash_update($ctx, $this->getEncodedParams());
-
-        return hash_final($ctx);
-    }
+//    /**
+//     * @return string
+//     */
+//    protected function generateHashSign()
+//    {
+//        $ctx = hash_init('sha256', HASH_HMAC, $this->secret);
+//        hash_update($ctx, $this->getEncodedParams());
+//
+//        return hash_final($ctx);
+//    }
 }
